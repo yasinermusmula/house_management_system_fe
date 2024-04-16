@@ -20,15 +20,17 @@ export default function Navbar(){
                 <p className="pr-4">Evinizi Airbnb'ye Taşıyın</p>
                 <MdLanguage className="mt-1"/>
                 <div className="flex items-center">
-                 <Link to="/login">
-                   <div className="flex items-center mr-2">
-                     <FaUser className="text-blue-600 ml-2"/>
-                     <p>Login</p>
-                   </div>
-                 </Link>
+                    <div className="flex items-center mr-2">
+                      <FaUser className="text-blue-600 ml-2"/>
+                     <Link to="/login">
+                      <p>Login</p>
+                     </Link>
+                    </div>
                   <p className="mr-2">/</p>
                 </div>
-                  <Link to="/signup">Register</Link>
+                  <Link to="/signup">
+                      <p>Register</p>
+                  </Link>
             </div>
         </div>
     )
