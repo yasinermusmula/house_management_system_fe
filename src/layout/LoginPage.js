@@ -1,15 +1,25 @@
 import Navbar from "./Navbar";
 import {useForm} from "react-hook-form";
-import {options} from "axios";
+import axios, {options} from "axios";
+import {useEffect, useState} from "react";
+import {useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {userName} from "../store/actions/UserActions";
 export default function LoginPage(){
 
+    const history = useHistory();
     const {register,handleSubmit,formState:{errors,isValid}} = useForm()
+    const dispatch = useDispatch();
+
+    const onSubmit = (data) => {
+       dispatch(userName(data,history))
+    }
 
     return(
         <>
             <Navbar/>
         <div className="flex justify-center">
-            <form className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label
                         htmlFor="email"
