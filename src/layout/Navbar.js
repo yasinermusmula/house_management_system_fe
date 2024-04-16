@@ -3,8 +3,14 @@ import {faAirbnb} from "@fortawesome/free-brands-svg-icons/faAirbnb";
 import { FaUser } from "react-icons/fa";
 import {MdLanguage} from "react-icons/md";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {FETCH_STATE} from "../store/reducers/UserActionReducer";
 
 export default function Navbar(){
+
+    const fetchData = useSelector(store=>store.userReducer)
+    console.log(fetchData)
+
     return(
         <div className="flex justify-between m-8">
             <div className="flex items-center">
@@ -23,7 +29,10 @@ export default function Navbar(){
                     <div className="flex items-center mr-2">
                       <FaUser className="text-blue-600 ml-2"/>
                      <Link to="/login">
-                      <p>Login</p>
+                         {fetchData.fetchState === FETCH_STATE.FETCHED ?
+                             <div>Hosgeldin {fetchData.name}</div>:
+                             <p>Login</p>
+                         }
                      </Link>
                     </div>
                   <p className="mr-2">/</p>
