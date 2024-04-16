@@ -19,7 +19,7 @@ export default function SignUp(){
     };
 
     const onSubmit = (data) => {
-        const{confirmPassword,...postData} = data;
+        const {confirmPassword,...postData} = data;
         console.log("Form submit edildi",postData)
 
         axios.post("http://localhost:8082/api/auth/register",postData)
