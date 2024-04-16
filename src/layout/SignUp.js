@@ -1,12 +1,14 @@
 import Navbar from "./Navbar";
 import {Link} from "react-router-dom";
 import {useForm} from "react-hook-form";
+import axios from "axios";
 
 
 export default function SignUp(){
     console.log("Signup render edildi")
 
-    const {register,
+    const {
+        register,
         handleSubmit,
         formState:{errors,isValid,isSubmitting},
         getValues} = useForm()
@@ -16,9 +18,25 @@ export default function SignUp(){
         return value === password || "Passwords do not match";
     };
 
+    const onSubmit = (data) => {
+        const{confirmPassword,...postData} = data;
+        console.log("Form submit edildi",postData)
+
+        axios.post("http://localhost:8082/api/auth/register",postData)
+            .then((res) => {
+            console.log("success",postData)
+        })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
     return (
+        <>
+            <Navbar/>
         <form
             className=" dark:bg-gray-900 w-80 m-auto"
+            onSubmit={handleSubmit(onSubmit)}
         >
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <div className="w-full bg-white rounded-lg shadow">
@@ -47,7 +65,31 @@ export default function SignUp(){
                                 })}
                             />
                             {errors.name && (
-                                <p className="text-red-500">{errors.name.message}</p>
+                                <p className="text-red-500">{errors.name?.message}</p>
+                            )}
+                        </div>
+                        <div>
+                            <label
+                                htmlFor="username"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >
+                                Your surname
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                className={`bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5 rounded-lg `}
+                                placeholder="username"
+                                {...register("sirname", {
+                                    required: "Name can't be empty",
+                                    minLength: {
+                                        value: 3,
+                                        message: "You have to write at least 3 characters",
+                                    },
+                                })}
+                            />
+                            {errors.name && (
+                                <p className="text-red-500">{errors.name?.message}</p>
                             )}
                         </div>
                         <div>
@@ -72,7 +114,7 @@ export default function SignUp(){
                             />
                             <label/>
                             {errors.email && (
-                                <p className="text-red-500">{errors?.email?.message}</p>
+                                <p className="text-red-500">{errors?.email.message}</p>
                             )}
                         </div>
                         <div>
@@ -147,7 +189,7 @@ export default function SignUp(){
                             <select
                                 // value={watch("role_id")}
                                 // onClick={changeHandler}
-                                {...register("role_id")}
+                                {...register("role")}
                             >
                                 <option>USER</option>
                                 <option>ADMIN</option>
@@ -179,5 +221,6 @@ export default function SignUp(){
                 </div>
             </div>
         </form>
+        </>
     )
 }
