@@ -3,13 +3,18 @@ import {faAirbnb} from "@fortawesome/free-brands-svg-icons/faAirbnb";
 import { FaUser } from "react-icons/fa";
 import {MdLanguage} from "react-icons/md";
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {FETCH_STATE} from "../store/reducers/UserActionReducer";
+import {logOutAction} from "../store/actions/UserActions";
 
 export default function Navbar(){
-
-    const fetchData = useSelector(store=>store.userReducer)
+    const dispatch = useDispatch();
+    const fetchData = useSelector(store=>store.user)
     console.log(fetchData)
+
+    const logOut = () =>{
+        dispatch(logOutAction())
+    }
 
     return(
         <div className="flex justify-between m-8">
@@ -28,18 +33,28 @@ export default function Navbar(){
                 <div className="flex items-center">
                     <div className="flex items-center mr-2">
                       <FaUser className="text-blue-600 ml-2"/>
-                     <Link to="/login">
-                         {fetchData.fetchState === FETCH_STATE.FETCHED ?
-                             <div>Hosgeldin {fetchData.name}</div>:
-                             <p>Login</p>
-                         }
-                     </Link>
+                        {fetchData.fetchState === FETCH_STATE.FETCHED ?
+                            <div className="flex">
+                                <p>Hosgeldin {fetchData.user.name}</p>
+                                <p className="mx-2">/</p>
+                                <span onClick={logOut}>Log Out</span>
+                                <Link to="/property">
+                                   <span>Property Ekle</span>
+                                </Link>
+                            </div>
+                            :
+                            <div className="flex">
+                              <Link to="/login">
+                                <p>Login</p>
+                              </Link>
+                               <p className="mx-2">/</p>
+                                <Link to="/signup">
+                                  <p>Register</p>
+                                </Link>
+                            </div>
+                        }
                     </div>
-                  <p className="mr-2">/</p>
                 </div>
-                  <Link to="/signup">
-                      <p>Register</p>
-                  </Link>
             </div>
         </div>
     )
