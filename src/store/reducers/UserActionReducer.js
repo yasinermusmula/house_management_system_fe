@@ -1,4 +1,4 @@
-import {ADD_USER_DATA, SET_FETCH_STATE} from "../actions/UserActions";
+import {ADD_USER_DATA, SET_FETCH_STATE, SET_LOG_OUT} from "../actions/UserActions";
 
 export const FETCH_STATE = {
     NOT_FETCHED: "Not Fetched",
@@ -9,7 +9,7 @@ export const FETCH_STATE = {
 
 
 const initialUserState = {
-    name: "",
+    user:{},
     fetchState: FETCH_STATE.NOT_FETCHED
 }
 export function userReducer(state= initialUserState,action){
@@ -17,12 +17,17 @@ export function userReducer(state= initialUserState,action){
         case ADD_USER_DATA:
             return {
                 ...state,
-                name: action.payload.name
+                user: action.payload
             }
         case SET_FETCH_STATE:
             return {
                 ...state,
                 fetchState: action.payload
+            }
+        case SET_LOG_OUT:
+            return {
+                ...state,
+                user:state.user
             }
         default:
             return state;
