@@ -4,6 +4,6 @@ import {thunk} from "redux-thunk";
 import {logger} from "redux-logger/src";
 
 const reducers = combineReducers({
-    userReducer
+    user:userReducer
 })
 export const store = createStore(reducers,applyMiddleware(thunk,logger));
