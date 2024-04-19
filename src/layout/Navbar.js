@@ -37,9 +37,11 @@ export default function Navbar(){
                             <div className="flex">
                                 <p>Hosgeldin {fetchData.user.name}</p>
                                 <p className="mx-2">/</p>
-                                <span onClick={logOut}>Log Out</span>
+                                <Link>
+                                   <span onClick={logOut}>Log Out</span>
+                                </Link>
                                 <Link to="/property">
-                                   <span>Property Ekle</span>
+                                   <span className="mx-2">Property Ekle</span>
                                 </Link>
                             </div>
                             :
